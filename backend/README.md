@@ -46,3 +46,6 @@ You can use any language you are comfortable with or our own stack:
 - Include a helpful `README.md`!
 
 Happy coding!
+
+## Swagger Docs
+When running the API go to: http://localhost:8080/swagger/index.html

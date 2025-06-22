@@ -12,6 +12,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// CreateTask godoc
+// @Summary Create a new task
+// @Description Create a task with title, description, status and due date
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param task body models.Task true "Task to create"
+// @Success 201 {object} models.Task
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks [post]
 func CreateTask(c *gin.Context) {
 	var task models.Task
 	if err := c.ShouldBindJSON(&task); err != nil {
@@ -29,6 +40,16 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusCreated, task)
 }
 
+// GetTask godoc
+// @Summary Get a task by ID
+// @Description Retrieve a task by its ID
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path string true "Task ID"
+// @Success 200 {object} models.Task
+// @Failure 404 {object} map[string]string
+// @Router /tasks/{id} [get]
 func GetTask(c *gin.Context) {
 	id := c.Param("id")
 	var task models.Task
@@ -41,6 +62,15 @@ func GetTask(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
+// GetAllTasks godoc
+// @Summary Get all tasks
+// @Description Retrieve a list of all tasks
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Success 200 {array} models.Task
+// @Failure 500 {object} map[string]string
+// @Router /tasks [get]
 func GetAllTasks(c *gin.Context) {
 	cursor, err := config.TaskCollection.Find(context.TODO(), bson.M{})
 	if err != nil {
@@ -59,6 +89,18 @@ func GetAllTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, tasks)
 }
 
+// UpdateTaskStatus godoc
+// @Summary Update the status of a task
+// @Description Update only the status field of a task
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path string true "Task ID"
+// @Param status body map[string]string true "New status"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/{id} [put]
 func UpdateTaskStatus(c *gin.Context) {
 	id := c.Param("id")
 	var body struct {
@@ -84,6 +126,16 @@ func UpdateTaskStatus(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Status updated"})
 }
 
+// DeleteTask godoc
+// @Summary Delete a task
+// @Description Delete a task by its ID
+// @Tags tasks
+// @Accept json
+// @Produce json
+// @Param id path string true "Task ID"
+// @Success 200 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /tasks/{id} [delete]
 func DeleteTask(c *gin.Context) {
 	id := c.Param("id")
 	_, err := config.TaskCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
