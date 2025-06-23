@@ -1,7 +1,9 @@
 # dts-developer-challenge
 
 ## Run
+Run both the frontend and backend apps together
 Enter the backend/ directory and run the following command from the terminal:  `$ make run`. This will execute the Makefile and will run the backend server.
+Enter the frontend directory and run the following command from the terminal:  `$ make run`. This will execute the Makefile and will run the frontend client application.
 
 ## Data Format
 The data is currently stored in a Mongo DB Atlas online database. The collection contains data in the following format:
