@@ -27,7 +27,7 @@ go.work.sum
 /go.sum
 
 # IDE/editor configs
-.vscode/
+# .vscode/
 .idea/
 *.swp
 *.swo
@@ -44,3 +44,5 @@ Thumbs.db
 # Environment files (if any)
 */.env
 .env.*
+
+*.bac
